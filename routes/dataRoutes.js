@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var dataController = require('../controllers/dataController.js');
 
+/* TODO: check if user is logged in etc. (video @ 1:08:00)
+*/
+
 /*
  * GET
  */

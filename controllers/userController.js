@@ -23,6 +23,56 @@ module.exports = {
         });
     },
 
+    showLogin: function (req, res) {
+        return res.render('user/login');
+    },
+
+    showRegister: function (req, res) {
+        return res.render('user/register');
+    },
+
+    login: function (req, res, next) {
+        UserModel.authenticate(req.body.username, req.body.password, function (error, user) {
+            if (error || !user) {
+                var err = new Error('Wrong username or password.');
+                err.status = 401;
+                return next(err);
+            } else {
+                req.session.userId = user._id;
+                return res.redirect('profile');
+            }
+        });
+    },
+
+    profile: function (req, res, next) {
+        UserModel.findById(req.session.userId)
+            .exec(function (error, user) {
+                if (error) {
+                    return next(error);
+                } else {
+                    if(user === null) {
+                        var err = new Error('User not registered.');
+                        err.status = 401;
+                        return next(err);
+                    } else {
+                        return res.render('user/profile', user);
+                    }
+                }
+            });
+    },
+
+    logout: function (req, res, next) {
+        if (req.session) {
+            req.session.destroy(function (err) {
+                if (err) {
+                    return next(err);
+                } else {
+                    return res.redirect('/');
+                }
+            });
+        }
+    },
+
     /**
      * userController.show()
      */
