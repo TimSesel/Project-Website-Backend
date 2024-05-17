@@ -15,7 +15,7 @@
     "express-session": "^1.18.0",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
-    "mongoose": "^6.9.0",
+    "mongoose": "^6.12.8",
     "morgan": "~1.9.1"
   }
 }
