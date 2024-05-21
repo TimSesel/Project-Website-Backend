@@ -23,6 +23,10 @@ module.exports = {
         });
     },
 
+    add: function (req, res) {
+        return res.render('data/add');
+    },
+
     /**
      * dataController.show()
      */
@@ -55,9 +59,9 @@ module.exports = {
 			location : req.body.location,
 			coordinate_x : req.body.coordinate_x,
 			coordinate_y : req.body.coordinate_y,
-			date : req.body.date
+			date : req.body.date,
+            decibels : req.body.decibels,
         });
-
         data.save(function (err, data) {
             if (err) {
                 return res.status(500).json({
@@ -65,7 +69,6 @@ module.exports = {
                     error: err
                 });
             }
-
             return res.status(201).json(data);
         });
     },
@@ -94,6 +97,7 @@ module.exports = {
 			data.coordinate_x = req.body.coordinate_x ? req.body.coordinate_x : data.coordinate_x;
 			data.coordinate_y = req.body.coordinate_y ? req.body.coordinate_y : data.coordinate_y;
 			data.date = req.body.date ? req.body.date : data.date;
+            data.decibels = req.body.decibels ? req.body.decibels : data.decibels;
 			
             data.save(function (err, data) {
                 if (err) {

@@ -3,11 +3,11 @@ var Schema   = mongoose.Schema;
 
 var dataSchema = new Schema({
 	'location' : String,
-	'coordinate_x' : Number,
-	'coordinate_y' : Number,
+	'coordinate_x' : String,
+	'coordinate_y' : String,
 	'date' : Date,
-	'decibels' : Number,
-	'scale' : String,
+	'decibels' : String,
+	//'scale' : String,
 });
 
 module.exports = mongoose.model('data', dataSchema);
