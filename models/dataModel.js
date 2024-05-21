@@ -3,10 +3,10 @@ var Schema   = mongoose.Schema;
 
 var dataSchema = new Schema({
 	'location' : String,
-	'coordinate_x' : String,
-	'coordinate_y' : String,
+	'coordinate_x' : Number,
+	'coordinate_y' : Number,
 	'date' : Date,
-	'decibels' : String,
+	'decibels' : Number,
 	//'scale' : String,
 });
 
