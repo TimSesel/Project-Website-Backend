@@ -2,13 +2,22 @@ var express = require('express');
 var router = express.Router();
 var dataController = require('../controllers/dataController.js');
 
-/* TODO: check if user is logged in etc. (video @ 1:08:00)
-*/
+// Middleware function to check for logged-in users
+function requiresLogin(req, res, next) {
+  if (req.session && req.session.userId) {
+    return next();
+  } else {
+    var err = new Error('Login required.');
+    err.status = 401;
+    return next(err);
+  }
+}
 
 /*
  * GET
  */
 router.get('/', dataController.list);
+router.get('/add', requiresLogin, dataController.add);
 
 /*
  * GET
