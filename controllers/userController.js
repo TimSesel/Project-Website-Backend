@@ -40,6 +40,7 @@ module.exports = {
             } else {
                 req.session.userId = user._id;
                 return res.redirect('profile');
+                //return res.json(user);
             }
         });
     },
@@ -56,6 +57,7 @@ module.exports = {
                         return next(err);
                     } else {
                         return res.render('user/profile', user);
+                        //return res.json(user);
                     }
                 }
             });
@@ -68,6 +70,7 @@ module.exports = {
                     return next(err);
                 } else {
                     return res.redirect('/');
+                    //return res.status(201).json({});
                 }
             });
         }

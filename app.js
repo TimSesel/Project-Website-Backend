@@ -39,7 +39,7 @@ app.set('view engine', 'hbs');
 var session = require('express-session');
 var MongoStore = require('connect-mongo'); // session shranjujemo v mongoDB, za lažji development
 app.use(session({
-  secret: 'fnaf susy', // Default je 'work hard' thus I changed it PS: if session doesn't work, this is probably the cause
+  secret: 'stjr 4lfe', // Default je 'work hard' thus I changed it PS: if session doesn't work, this is probably the cause
   resave: true,
   saveUninitialized: false,
   store: MongoStore.create({mongoUrl: mongoDB}) // tle storamo session v mongo
