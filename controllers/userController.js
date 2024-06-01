@@ -39,8 +39,8 @@ module.exports = {
                 return next(err);
             } else {
                 req.session.userId = user._id;
-                return res.redirect('profile');
-                //return res.json(user);
+                //return res.redirect('profile');
+                return res.json(user);
             }
         });
     },
@@ -56,8 +56,8 @@ module.exports = {
                         err.status = 401;
                         return next(err);
                     } else {
-                        return res.render('user/profile', user);
-                        //return res.json(user);
+                        //return res.render('user/profile', user);
+                        return res.json(user);
                     }
                 }
             });
@@ -69,8 +69,8 @@ module.exports = {
                 if (err) {
                     return next(err);
                 } else {
-                    return res.redirect('/');
-                    //return res.status(201).json({});
+                    //return res.redirect('/');
+                    return res.status(201).json({});
                 }
             });
         }
