@@ -56,9 +56,9 @@ module.exports = {
      */
     create: function (req, res) {
         var data = new DataModel({
-			location : req.body.location,
-			coordinate_x : req.body.coordinate_x,
-			coordinate_y : req.body.coordinate_y,
+			// location : req.body.location,
+			latitude : req.body.latitude,
+			longitude : req.body.longitude,
 			date : req.body.date,
             decibels : req.body.decibels,
         });
@@ -93,9 +93,9 @@ module.exports = {
                 });
             }
 
-            data.location = req.body.location ? req.body.location : data.location;
-			data.coordinate_x = req.body.coordinate_x ? req.body.coordinate_x : data.coordinate_x;
-			data.coordinate_y = req.body.coordinate_y ? req.body.coordinate_y : data.coordinate_y;
+            // data.location = req.body.location ? req.body.location : data.location;
+			data.latitude = req.body.latitude ? req.body.latitude : data.latitude;
+			data.longitude = req.body.longitude ? req.body.longitude : data.longitude;
 			data.date = req.body.date ? req.body.date : data.date;
             data.decibels = req.body.decibels ? req.body.decibels : data.decibels;
 			
