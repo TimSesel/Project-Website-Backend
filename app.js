@@ -13,17 +13,8 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 var aedes = require("aedes")();
-aedes.on("publish", (packet, client) => {
-  console.log(
-    `|===[Aedes]===|
-     | Client: ${client ? client.id : "N/A"}
-     | Topic: ${packet.topic}
-     | Message: ${packet.payload.toString()}
-     |=============|`
-      .split("\n")
-      .map((s) => s.trimStart())
-      .join("\n"),
-  );
+aedes.on("publish", (packet, _client) => {
+  console.log(`\x1b[32m[Aedes] \x1b[33m${packet.topic}: \x1b[0m${packet.payload.toString()}`);
 });
 
 var aedesTcpServer = require("net").createServer(aedes.handle);
