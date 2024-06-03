@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var http = require("http");
 
 var mongoose = require("mongoose");
 var mongoDB =
@@ -14,12 +15,33 @@ db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 var aedes = require("aedes")();
 aedes.on("publish", (packet, _client) => {
-  console.log(`\x1b[32m[Aedes] \x1b[33m${packet.topic}: \x1b[0m${packet.payload.toString()}`);
+  console.log(
+    `\x1b[32m[Aedes] \x1b[33m${packet.topic}: \x1b[0m${packet.payload.toString()}`,
+  );
+
+  if (packet.topic !== "noise/updates") {
+    return;
+  }
+
+  try {
+    const noise = JSON.parse(packet.payload.toString());
+
+    require("axios")
+      .post("http://localhost:3001/datas", noise)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.error(`[Aedes] ${e}`);
+      });
+  } catch (e) {
+    console.error(`[Aedes] ${e}`);
+  }
 });
 
 var aedesTcpServer = require("net").createServer(aedes.handle);
 aedesTcpServer.listen(1883);
-var aedesHttpServer = require("http").createServer(aedes.handle);
+var aedesHttpServer = http.createServer(aedes.handle);
 require("websocket-stream").createServer(
   { server: aedesHttpServer },
   aedes.handle,
