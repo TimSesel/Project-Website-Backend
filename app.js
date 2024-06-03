@@ -13,7 +13,6 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 var aedes = require("aedes")();
-var aedesServer = require("net").createServer(aedes.handle);
 aedes.on("publish", (packet, client) => {
   console.log(
     `|===[Aedes]===|
@@ -26,7 +25,15 @@ aedes.on("publish", (packet, client) => {
       .join("\n"),
   );
 });
-aedesServer.listen(1883);
+
+var aedesTcpServer = require("net").createServer(aedes.handle);
+aedesTcpServer.listen(1883);
+var aedesHttpServer = require("http").createServer(aedes.handle);
+require("websocket-stream").createServer(
+  { server: aedesHttpServer },
+  aedes.handle,
+);
+aedesHttpServer.listen(8888);
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/userRoutes");
