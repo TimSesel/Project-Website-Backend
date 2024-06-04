@@ -59,7 +59,7 @@ module.exports = {
 			// location : req.body.location,
 			latitude : req.body.latitude,
 			longitude : req.body.longitude,
-			date : req.body.date,
+			// date : req.body.date,
             decibels : req.body.decibels,
         });
         data.save(function (err, data) {
