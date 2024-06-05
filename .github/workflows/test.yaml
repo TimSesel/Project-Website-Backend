@@ -8,18 +8,23 @@ on:
 
 jobs:
   build:
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
-        node-version: '20'
+        node-version: ${{ matrix.node-version }}
 
     - name: Install dependencies
       run: npm install
 
+    # Checks syntax
     - name: Run lint
       run: npm run lint
