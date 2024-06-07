@@ -56,11 +56,10 @@ module.exports = {
      */
     create: function (req, res) {
         var data = new DataModel({
-			// location : req.body.location,
 			latitude : req.body.latitude,
 			longitude : req.body.longitude,
-			// date : req.body.date,
             decibels : req.body.decibels,
+            user : req.body.user ? req.body.user : user,
         });
         data.save(function (err, data) {
             if (err) {
