@@ -59,7 +59,7 @@ module.exports = {
 			latitude : req.body.latitude,
 			longitude : req.body.longitude,
             decibels : req.body.decibels,
-            user : req.body.user ? req.body.user : user,
+            userId : req.body.userId ? req.body.userId : userId,
         });
         data.save(function (err, data) {
             if (err) {
