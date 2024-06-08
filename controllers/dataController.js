@@ -60,6 +60,7 @@ module.exports = {
 			latitude : req.body.latitude,
 			longitude : req.body.longitude,
             decibels : req.body.decibels,
+            radius : req.body.radius,
             userId : req.body.userId ? mongoose.Types.ObjectId(req.body.userId) : req.session.userId,
         });
         data.save(function (err, data) {
@@ -98,6 +99,7 @@ module.exports = {
 			data.longitude = req.body.longitude ? req.body.longitude : data.longitude;
 			data.date = req.body.date ? req.body.date : data.date;
             data.decibels = req.body.decibels ? req.body.decibels : data.decibels;
+            data.radius = req.body.radius ? req.body.radius : data.radius;
 			
             data.save(function (err, data) {
                 if (err) {
