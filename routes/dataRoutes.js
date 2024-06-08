@@ -18,6 +18,7 @@ function requiresLogin(req, res, next) {
  */
 router.get('/', dataController.list);
 router.get('/add', requiresLogin, dataController.add);
+router.get('/dates', dataController.dates);
 
 /*
  * GET

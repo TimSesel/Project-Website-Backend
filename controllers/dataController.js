@@ -24,6 +24,56 @@ module.exports = {
         });
     },
 
+    dates: function (req, res) {
+        try {
+            DataModel.aggregate([
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: "$date" },
+                            month: { $month: "$date" },
+                            day: { $dayOfMonth: "$date" }
+                        },
+                        data: { $push: "$$ROOT" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        date: {
+                            $dateFromParts: {
+                                year: "$_id.year",
+                                month: "$_id.month",
+                                day: "$_id.day"
+                            }
+                        },
+                        data: 1
+                    }
+                },
+                {
+                    $sort: {
+                        date: 1
+                    }
+                }
+            ])
+            .exec(function (err, dates) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when getting dates.',
+                        error: err
+                    });
+                }
+    
+                return res.json(dates);
+            });
+        } catch(err) {
+            return res.status(500).json({
+                message: 'Error when getting dates.',
+                error: err
+            });
+        }
+    },
+
     add: function (req, res) {
         return res.render('data/add');
     },
