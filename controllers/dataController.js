@@ -61,7 +61,7 @@ module.exports = {
 			longitude : req.body.longitude,
             decibels : req.body.decibels,
             radius : req.body.radius,
-            userId : req.body.userId ? mongoose.Types.ObjectId(req.body.userId) : req.session.userId,
+            userId : req.body.id ? mongoose.Types.ObjectId(req.body.id) : req.session.userId,
         });
         data.save(function (err, data) {
             if (err) {
