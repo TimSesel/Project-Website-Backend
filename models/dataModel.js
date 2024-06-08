@@ -7,7 +7,7 @@ var dataSchema = new Schema({
     'longitude': { type: Number, required: true },
 	'date' : { type: Date, default: Date.now },
     'decibels': { type: Number, required: true },
-	'userId': { type: String, required: true },
+	'userId': { type: Schema.Types.ObjectId, ref: 'user', required: true },
 });
 
 module.exports = mongoose.model('data', dataSchema);

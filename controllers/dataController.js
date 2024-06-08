@@ -1,4 +1,5 @@
 var DataModel = require('../models/dataModel.js');
+const mongoose = require('mongoose');
 
 /**
  * dataController.js
@@ -59,7 +60,7 @@ module.exports = {
 			latitude : req.body.latitude,
 			longitude : req.body.longitude,
             decibels : req.body.decibels,
-            userId : req.body.userId ? req.body.userId : userId,
+            userId : req.body.userId ? mongoose.Types.ObjectId(req.body.userId) : req.session.userId,
         });
         data.save(function (err, data) {
             if (err) {
