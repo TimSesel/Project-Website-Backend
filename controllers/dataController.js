@@ -1,4 +1,5 @@
 var DataModel = require('../models/dataModel.js');
+var DataModelCompression = require('../models/dataModelCompression.js');
 const mongoose = require('mongoose');
 
 /**
@@ -122,6 +123,39 @@ module.exports = {
             }
             return res.status(201).json(data);
         });
+    },
+
+    createCompressed: function (req, res) {
+        var json_data = JSON.stringify(req.body);
+        var spawn = require('child_process').spawn;
+        var child = spawn('sh', ['-c', `cd ~/project/Project-Parallel-Compression/ && just compress huffman 2`]);
+
+        var stdout = '';
+        child.stdout.on('data', function (data) {
+            stdout += data.toString();
+        });
+
+        child.stderr.on('data', function (data) {
+            console.error(`stderr: ${data}`);
+        });
+
+        child.on('close', function (code) {
+            var data = new DataModelCompression({
+                info : stdout,
+            });
+            data.save(function (err, data) {
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Error when creating data',
+                        error: err
+                    });
+                }
+                return res.status(201).json(data);
+            });
+        });
+
+        child.stdin.write(json_data);
+        child.stdin.end();
     },
 
     /**
